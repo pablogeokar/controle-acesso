@@ -2,7 +2,7 @@ import { compare } from 'bcryptjs';
 import { Request, Response } from 'express'
 import { getCustomRepository } from 'typeorm';
 import { sign } from 'jsonwebtoken'
-import { UserRepository } from '../repositories/UserRepository';
+import UserRepository from '../repositories/UserRepository';
 
 
 class SessionController {
@@ -34,4 +34,4 @@ class SessionController {
   }
 }
 
-export default new SessionController
+export default new SessionController()

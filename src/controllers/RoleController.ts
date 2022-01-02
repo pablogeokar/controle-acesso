@@ -22,7 +22,7 @@ class RoleController {
     const role = roleRepository.create({
       name,
       description,
-      permission: existsPermissions
+      permissions: existsPermissions
     })
 
     await roleRepository.save(role)
@@ -31,4 +31,4 @@ class RoleController {
   }
 }
 
-export default new RoleController
+export default new RoleController()

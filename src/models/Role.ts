@@ -1,6 +1,6 @@
 import { v4 as uuid } from 'uuid'
 import { Entity, Column, PrimaryColumn, CreateDateColumn, ManyToMany, JoinTable } from "typeorm";
-import Permission from './Permision';
+import Permission from './Permission';
 
 @Entity('roles')
 class Role {
@@ -22,7 +22,7 @@ class Role {
     joinColumns: [{ name: 'role_id' }],
     inverseJoinColumns: [{ name: 'permission_id' }]
   })
-  permission: Permission[]
+  permissions: Permission[]
 
   constructor() {
     if (!this.id) {

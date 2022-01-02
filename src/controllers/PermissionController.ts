@@ -26,4 +26,4 @@ class PermissionController {
   }
 }
 
-export default new PermissionController
+export default new PermissionController()
