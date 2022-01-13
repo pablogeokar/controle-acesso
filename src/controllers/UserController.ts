@@ -15,7 +15,7 @@ class UserController {
     const existUser = await userRepository.findOne({ username })
 
     if (existUser) {
-      return res.status(400).json({ message: 'User already exists' })
+      return res.status(400).json({ error: 'User already exists' })
     }
 
     const passwordHash = password ? await hash(password, 8) : await hash('usuário não informou a senha', 8)
@@ -32,7 +32,7 @@ class UserController {
     try {
       await userRepository.save(user)
     } catch (error) {
-      return res.status(400).json({ message: error.message })
+      return res.status(400).json({ error: error.message })
     }
 
     delete user.password

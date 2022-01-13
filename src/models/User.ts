@@ -1,4 +1,4 @@
-import { Entity, Column, CreateDateColumn, PrimaryColumn, ManyToMany, JoinTable } from 'typeorm'
+import { Entity, Column, CreateDateColumn, PrimaryColumn, ManyToMany, JoinTable, OneToOne } from 'typeorm'
 import { v4 as uuid } from 'uuid'
 import Role from './Role';
 
@@ -18,6 +18,17 @@ class User {
 
   @CreateDateColumn()
   created_at: Date
+
+  /*
+  @OneToOne(() => Role)
+  @JoinTable({
+    name: 'roles',
+    joinColumns: [{ name: 'id' }],
+    inverseJoinColumns: [{ name: 'role_id' }]
+  })
+  roles: Role[]
+  */
+
 
   @ManyToMany(() => Role)
   @JoinTable({

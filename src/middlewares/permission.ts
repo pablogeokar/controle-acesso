@@ -1,24 +1,48 @@
-import { decode } from 'jsonwebtoken'
+import { verify } from 'jsonwebtoken'
 import { Request, Response, NextFunction } from 'express'
 import { getCustomRepository } from 'typeorm';
 import UserRepository from './../repositories/UserRepository';
 import User from '../models/User';
 
+interface TokenPayload {
+  hash: string
+  sub: string
+  iat: number
+  exp: number
+}
+
 
 async function decoder(req: Request): Promise<User> {
+
   const authHeader = req.headers.authorization || ""
   const userRepository = getCustomRepository(UserRepository)
 
   const [, token] = authHeader?.split(" ")
 
-  const payload = decode(token)
+  try {
 
-  const user = await userRepository.findOne(String(payload?.sub),
-    {
-      relations: ['roles'],
-    })
+    if (token) {
 
-  return user
+      const payload = verify(token, process.env.SECRET_TOKEN)
+
+      const { hash } = payload as TokenPayload
+
+      if (hash) {
+        req.userAuth = { hash }
+      }
+
+      const user = await userRepository.findOne(String(payload?.sub),
+        {
+          relations: ['roles'],
+        })
+
+      return user
+    }
+
+  } catch {
+    return
+  }
+
 }
 
 function is(role: String[]) {
